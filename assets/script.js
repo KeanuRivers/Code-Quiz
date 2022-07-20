@@ -67,3 +67,30 @@ function deselectAnswers() {
 
 }
 
+function getSelected() {
+    let answerEls
+    answerEls.forEach(answerEl => {
+        if(answerEl.checked){
+            answer = answerEl.id 
+        }
+    })
+    return answer
+}
+
+submitBtn.addEventListener('click', () => {
+    const answer = getSelected()
+    if(answer) {
+        if(answer === quizData[currentQuiz].correct) {
+
+        }
+        currentQuiz++
+
+        if(currentQuiz < quizData.length) {
+            loadQuiz()
+        }else{
+            quiz.innerHTML=`
+            <h2>You Answered ${score}/${quizData.length} questions correctly</h2>
+            `
+        }
+    }
+})
