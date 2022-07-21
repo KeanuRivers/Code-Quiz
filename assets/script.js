@@ -1,96 +1,134 @@
-const quizData = [
+var buttonEl = document.querySelector("#start");
+var timer = document.querySelector("#timer");
+var startContainer = document.getElementById("game-content")
+var questionDisplay = document.getElementById("questions");
+var choice1 = document.getElementById("question1");
+var choice2 = document.getElementById("question2");
+var choice3 = document.getElementById("question3");
+var choice4 = document.getElementById("question4");
+var results = document.querySelector("#results");
+var highScore = JSON.parse(localStorage.getItem("quiz")) || [];
+var win = document.getElementById("win");
+var input = document.getElementById("initials");
+var saveBtn = document.getElementById("save");
+// var localStorage = window.localStorage;
+var score = 0;
+var wins = 0;
+var losses = 0;
+var counter = 20;
+var questionTimer = " ";
+var questions = [
     {
-        question: "What is the skeleton of a Web Browser?",
-        a: "Javascript",
-        b: "Python",
-        c: "HTML",
-        d: "CSS",
-        correct: "c",
+        question: "What is the base structure for web design?", 
+        choices: ["HTML", "CSS", "JavaScript", "jQuery"],
+        answers: "HTML"
     },
     {
-        question: "Arrays in Javascript can be used to store what?"
-        a: "Other Arrays"
-        b: "Booleans",
-        c: "Numbers and Strings",
-        d: "All of the above",
-        correct:"d",
+        question: "What is one of the most complicated development language?", 
+        choices: ["HTML", "CSS", "JavaScript", "jQuery"],
+        answers: "JavaScript"
     },
     {
-        question: "How many looping statements are in Javascript?"
-        a: "7",
-        b: "20",
-        c: "1",
-        d: "15",
-        correct:"a",
+        question: "In JavaScript, the block of code that contains repeatable code or used more than once is known as a...?", 
+        choices: ["Block", "Function", "For Loop", "Console"],
+        answers: "Function"
     },
     {
-        question: "What does CSS stand for?"
-        a: "Central Style Sheet",
-        b: "Cascading Style Sheet",
-        c: "Cat Smile Sinister",
-        d: "Cascading Simple Sheets",
-        correct:"b",
+        question: "Which form of web design is used to change the style of a page?", 
+        choices: ["HTML", "CSS", "JavaScript", "jQuery"],
+        answers: "CSS"
     },
-
-
-];
-
-const quiz= document.getElementById('quiz')
-const answerEls = document.querySelectorAll('.answer')
-const questionEl = document.getElementById('question')
-const a_text = document.getElementById('a_text')
-const b_text = document.getElementById('b_text')
-const c_text = document.getElementById('c_text')
-const d_text = document.getElementById('d_text')
-const submitBtn = document.getElementById('submit')
-
-let currentQuiz = 0
-let score = 0
-
-loadQuiz()
-
-function loadQuiz() {
-
-    deselectAnswers()
-    const currentQuizData = quizData[currentQuiz]
-    
-    questionEl.innerText = currentQuizData.question
-    a_text.innerText = currentQuizData.a
-    b_text.innerText = currentQuizData.b
-    c_text.innerText = currentQuizData.c
-    d_text.innerText = currentQuizData.d
-
-}
-
-function deselectAnswers() {
-    answerEls.forEach(answerEls => answerEls.checked = false)
-
-}
-
-function getSelected() {
-    let answerEls
-    answerEls.forEach(answerEl => {
-        if(answerEl.checked){
-            answer = answerEl.id 
-        }
-    })
-    return answer
-}
-
-submitBtn.addEventListener('click', () => {
-    const answer = getSelected()
-    if(answer) {
-        if(answer === quizData[currentQuiz].correct) {
-
-        }
-        currentQuiz++
-
-        if(currentQuiz < quizData.length) {
-            loadQuiz()
-        }else{
-            quiz.innerHTML=`
-            <h2>You Answered ${score}/${quizData.length} questions correctly</h2>
-            `
-        }
+    {
+        question: "Who is Luke Skywalker's father?", 
+        choices: ["Count Dooku", "Yoda", "Obi-Wan Kenobi", "Darth Vader"],
+        answers: "Darth Vader"
     }
+]
+var questionCurrent = 0;
+startContainer.style.display = "none";
+results.style.display = "none";
+
+
+// Start Button
+buttonEl.addEventListener("click", function () {
+    startContainer.style.display = "block";
+    buttonEl.style.display = "none";
+    questionTimer = setInterval(timerDisplay, 1000)
+    displayQuestion();
+});
+
+
+// Questions diplayed
+function displayQuestion() {
+    questionDisplay.textContent = questions[questionCurrent].question;
+    choice1.innerHTML = questions[questionCurrent].choices[0];
+    choice2.innerHTML = questions[questionCurrent].choices[1];
+    choice3.innerHTML = questions[questionCurrent].choices[2];
+    choice4.innerHTML = questions[questionCurrent].choices[3];
+        choice1.setAttribute("value", questions[questionCurrent].choices[0]);
+        choice2.setAttribute("value", questions[questionCurrent].choices[1]);
+        choice3.setAttribute("value", questions[questionCurrent].choices[2]);
+        choice4.setAttribute("value", questions[questionCurrent].choices[3]);
+        choice1.onclick = userChoice;
+        choice2.onclick = userChoice;
+        choice3.onclick = userChoice;
+        choice4.onclick = userChoice;
+    
+};
+
+// Timer
+function timerDisplay() {
+    if (counter > 0) {
+        timer.textContent = counter;
+        counter--;
+    }else {
+        clearInterval(questionTimer);
+        displayResults();
+    }
+}
+
+// User Chooses answers
+function userChoice () {
+    var currentChoice = this.value 
+    console.log(currentChoice);
+    if (currentChoice === questions[questionCurrent].answers){
+        wins++;
+    } else {
+        losses++;
+    }
+    if (questionCurrent < questions.length -1){
+        questionCurrent++;
+        displayQuestion();
+    } else {
+        displayResults();
+    }
+};
+
+// Results of Quiz:
+function displayResults () {
+    //hide game content div container. Add 1 more div container to dipslay results. Create a button to store high score in local storage.
+    startContainer.style.display ="none";
+    results.style.display = "block";
+    timer.style.display = "none";
+    win.textContent = "wins:"+ wins + "losses"+ losses;
+    
+
+
+    console.log(wins, losses);
+}
+
+//  Save button:
+
+saveBtn.addEventListener("click", function(){
+    var userInitials = initials.value
+    var score = {
+        id: userInitials,
+        win: wins
+    }
+    highScore.push(score);
+    localStorage.setItem("quiz", JSON.stringify(highScore));
+
+    console.log(JSON.parse(localStorage.getItem("quiz")))
+
+    window.location.assign("./score.html");
 })
