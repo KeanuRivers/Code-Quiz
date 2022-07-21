@@ -8,36 +8,34 @@
         <link href="assets/style.css" rel="stylesheet">
     </head>
     <body>
+        <nav id="navi">
+            <a href="score.html">View High Scores</a>
+          </nav>
+          
+                <div id="startGame">
+                    <div>
+                    <h1><strong>Code Quiz</strong></h1>
+                    <h5 id="timer"></h5>
+                    <button id="start">Click to begin</button>
+                    </div>
+                </div>
+            
         <div class="quiz-container" id="quiz">
             <div class="quiz-header">
-                <h2 id="question">Question Text</h2>
-                <ul>
-                    <li>
-                        <input type="radio" name="answer" id="a" class="answer">
-                        <label for="a" id="a_text">Answer</label> 
-                    </li>
-
-                    <li>
-                        <input type="radio" name="answer" id="b" class="answer">
-                        <label for="b" id="b_text">Answer</label> 
-                    </li>
-
-                    <li>
-                        <input type="radio" name="answer" id="c" class="answer">
-                        <label for="c" id="c_text">Answer</label> 
-                    </li>
-
-                    <li>
-                        <input type="radio" name="answer" id="d" class="answer">
-                        <label for="d" id="d_text">Answer</label> 
-                    </li>
-                </ul>
-
-            </div> 
-
-            <button id="submit">Submit</button>        
-        
+                <h2 id="question"></h2>
+                <button id="question1"></button>
+                <button id="question2"></button>
+                <button id="question3"></button>
+                <button id="question4"></button>
+            </div>       
         </div>
-                <script src="./assets/script.js"></script>
+
+        <!-- Final Results -->
+        <div class="row" id="results">
+            <h5 id="win"></h5><input id="initials" type="text">
+            <button id="save">Save</button></div>
+        </div>
+        
+        <script src="./assets/index.js"></script>
     </body>
-</html> 
+</html>
