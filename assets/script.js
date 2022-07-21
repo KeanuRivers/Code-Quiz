@@ -67,3 +67,39 @@ startBtn.addEventListener("click", function () {
   displayQuestion();
 });
 
+function displayQuestion() {
+    questionContent.textContent = questions[questionCurrent].question;
+    choice1.innerHTML = questions[questionCurrent].choices[0];
+    choice2.innerHTML = questions[questionCurrent].choices[1];
+    choice3.innerHTML = questions[questionCurrent].choices[2];
+    choice4.innerHTML = questions[questionCurrent].choices[3];
+    choice1.setAttribute("value", questions[questionCurrent].choices[0]);
+    choice2.setAttribute("value", questions[questionCurrent].choices[1]);
+    choice3.setAttribute("value", questions[questionCurrent].choices[2]);
+    choice4.setAttribute("value", questions[questionCurrent].choices[3]);
+    choice1.onclick = userChoice;
+    choice2.onclick = userChoice;
+    choice3.onclick = userChoice;
+    choice4.onclick = userChoice;
+  }
+  
+  // User Chooses answer
+  function userChoice() {
+    let currentChoice = this.value;
+    console.log(currentChoice);
+    if (currentChoice === questions[questionCurrent].answers) {
+      wins++;
+    } else {
+      losses++;
+    }
+  
+    if (questionCurrent < questions.length - 1) {
+      questionCurrent++;
+      displayQuestion();
+    } else {
+      displayResults();
+    }
+  }
+  
+
+  
