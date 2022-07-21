@@ -101,5 +101,39 @@ function displayQuestion() {
     }
   }
   
-
+  // Displaying results of quiz
+  function displayResults() {
+    //Hide game content div container. Add 1 more div container to display results. Create a button to store high score in local storage.
+    quiz.style.display = "none";
+    results.style.display = "block";
+    timer.style.display = "none";
+    win.textContent = "Wins: " + wins + "Losses: " + losses;
+  
+    console.log(wins, losses);
+  }
+  
+  //Timer function:
+  function timerDisplay() {
+    if (counter > 0) {
+      timer.textContent = counter;
+      counter--;
+    } else {
+      clearInterval(questionTimer);
+      displayResults();
+    }
+  }
+  
+  //Save button event listener:
+  saveBtn.addEventListener("click", function () {
+    let userInitials = initials.value;
+    let score = {
+      id: userInitials,
+      win: wins,
+    };
+    highScore.push(score);
+    localStorage.setItem("quiz", JSON.stringify(highScore));
+    console.log(JSON.parse(localStorage.getItem("quiz")));
+  
+    window.location.assign("./score.html");
+  });
   
