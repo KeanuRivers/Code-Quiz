@@ -22,6 +22,9 @@ body{
     height: max-content;
     padding-bottom: 15px;
     overflow: hidden;
+    position: relative;
+    left: 28%;
+   
 }
 
 
@@ -60,4 +63,10 @@ button{
 
 #navi a:hover{
 color: aqua;
+}
+
+#startGame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
