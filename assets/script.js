@@ -35,8 +35,8 @@ let questions = [
   },
   {
     question: "How many looping statements are in Javascript?",
-    choices: ["7", "20", "1", "15"],
-    answers: "7",
+    choices: ["Seven", "Twenty", "One", "Fifteen"],
+    answers: "Seven",
   },
   {
     question: "What does CSS stand for?",
