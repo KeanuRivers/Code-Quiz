@@ -107,7 +107,7 @@ function displayQuestion() {
     quiz.style.display = "none";
     results.style.display = "block";
     timer.style.display = "none";
-    win.textContent = "Wins: " + wins + "Losses: " + losses;
+    win.textContent = "Wins: " + wins + " " + "Losses: " + losses;
   
     console.log(wins, losses);
   }
